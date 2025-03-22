@@ -25,7 +25,7 @@ productList(['Camiseta', 'Pantalón', 'Zapatos', 'Gorra']);
 //Sabrina está revisando su lista de correos electrónicos para enviar promociones, por ejemplo: ["cliente1@gmail.com", "cliente2@hotmail.com", "cliente3@gmail.com"]. Quiere asegurarse de que al menos uno de los correos pertenece a Gmail. Si lo encuentra, debe mostrar "Correo de Gmail encontrado". Si no, "No hay correos de Gmail".
 
 const confirmGmailMail = mail => {
-  mail[0, 1, 2].includes('mail')
+  mail[0].includes('gmail') || mail[1].includes('gmail') || mail[2].includes('gmail')
     ? console.log('Correo de Gmail encontrado')
     : console.log('No hay correos de gmail');
 };
@@ -35,22 +35,60 @@ confirmGmailMail([
   'cliente3@gmail.com'
 ]);
 
+
 //Macarena necesita generar un identificador único para cada usuario. Recibe un array con nombre y apellido, (por ejemplo: ['Enrique Sofresco', 'Esther Colero', 'Leandro Gado']) y debe imprimir las dos primeras letras de cada nombre y de cada apellido en mayúsculas, seguidas de un número aleatorio entre 10 y 99.
 
-const generateUserName = (names, surnames) => {
-  console.log(names[1]);
+//CAMINO CORTO
+
+const extractLetters = name => {
+  const findName = name.substring(0, name.indexOf(' '))
+  const findSurname = name.substring(name.indexOf(' ')+1, name.length)
+  
+  const excludeLetters = 
+  findName.charAt(0).toUpperCase() + 
+  findName.charAt(1).toUpperCase() + 
+  findSurname.charAt(0).toUpperCase() + 
+  findSurname.charAt(1).toUpperCase()
+
+  const addNumber = 
+  excludeLetters + Math.floor(Math.random()*99)
+
+  return addNumber
 }
-generateUserName(['María', 'Carlos'], ['Lafuente', 'Menacho'])
+
+const generateUserNames = names => {
+  firstName = extractLetters(names[0])
+  secondName = extractLetters(names[1])
+  thirdName = extractLetters(names[2])
+  console.log(`${firstName} ${secondName} ${thirdName}`);
+  
+}
+generateUserNames(['Enrique Sofresco', 'Esther Colero', 'Leandro Gado'])
+
+//CAMINO LARGO
+
+const generateUserName = (allName) => {
+  const findName = allName[0].substring(0, allName[0].indexOf(' '))
+  const findSurname = allName[0].substring(allName[0].indexOf(' ')+1, allName[0].length)
+  
+
+  const excludeLetters = findName.charAt(0).toUpperCase() + findName.charAt(1).toUpperCase()
+  console.log(excludeLetters);
+  
+  
+}
+generateUserName(['Enrique Sofresco', 'Esther Colero', 'Leandro Gado'])
+
 
 //Abby encontró una caja fuerte con un código de acceso en un array de cuatro dígitos, por ejemplo: [1, 5, 3, 8]. Si la suma del primer y el último número es par, imprimirá "Acceso concedido", si no, "Acceso denegado".
 
 const code = (numbers) => {
-  if (numbers[0] + numbers [3] === numbers[0] + numbers [3]% 2) {
+  if (numbers[0] + numbers [3] % 2 === 0) {
     console.log('Acceso concedido')
   } else { console.log('Acceso denegado');
   }
 }
-code([2, 5, 3, 8])
+code([1, 5, 3, 8])
 
 
 //Camila quiere generar dos números aleatorios entre 1 y 100 y determinar cuál es el mayor. Después los guardará en un array poniendo en la primera posición el mayor y en segunda posición el menor. Si son iguales, imprimirá "Empate", si no, imprimirá el array.
@@ -59,12 +97,12 @@ const generateAleatoryNumber = emptyArray => {
   const firstNumber = Math.floor(Math.random()*100)
   const secondNumber = Math.floor(Math.random()*100)
   if (firstNumber > secondNumber) {
-    console.log(emptyArray = firstNumber, secondNumber);
+    emptyArray[0] = firstNumber, emptyArray[1] = secondNumber
   }else if (secondNumber === firstNumber) {
-    console.log('Empate');
-  }else {console.log(emptyArray);
+    'Empate';
+  }else {};
+  console.log(`${emptyArray}`);
   }
-}
 generateAleatoryNumber(['hola caracola'])
 
 //Bego está calculando descuentos para varios clientes. Recibe un array con tres precios originales ([120, 75, 40]). Para cada precio, genera un número aleatorio entre 1 y 100. Si el número es menor que 50, aplica un 10% de descuento. Si es mayor o igual a 50, aplica un 20%. Debe imprimir el precio original, el número generado y el precio final con descuento para cada uno.
@@ -73,16 +111,34 @@ generateAleatoryNumber(['hola caracola'])
 //Precio: 75 | Número generado: 65 | Precio final: 60 (20% de descuento)
 //Precio: 40 | Número generado: 30 | Precio final: 36 (10% de descuento)
 
-const discountPerPrice = (precios) => {
-  const tweentyDiscount = precios*0.2
-  const firstNumber = Math.floor(Math.random()*100)
-  const secondNumber = Math.floor(Math.random()*100)
-  const thirdNumber = Math.floor(Math.random()*100)
-  if (precios > firstNumber) {
-    console.log(precios, tweentyDiscount, precios-precios*0.2);
-  }
+//CAMINO CORTO
+const applyDiscount = (price) => {
+  const randomNumber = Math.floor(Math.random()*100)
+  const discount = randomNumber < price ? `${price - price*0.1} (10% de descuento)` : `${price - price*0.2} (20% de descuento)`
+  return discount
 }
-discountPerPrice([99])
+
+const discountsPerPrices = (pricesList) => {
+  firstPrice = applyDiscount(pricesList[0])
+  console.log((`Precio original: ${pricesList[0]} || Número originado: ${applyDiscount()} || Precio final: ${firstPrice}`));
+   
+}
+discountsPerPrices([120, 75, 40])
+
+//CAMINO LARGO
+const discountPerPrice = (precios) => {
+  const firstPrice = Math.floor(Math.random()*100)
+  const firstDiscount = firstPrice < precios[0] ? `${precios[0] - precios[0]*0.1} (10% de descuento)` : `${precios[0] - precios[0]*0.2} (20% de descuento)`
+
+
+  console.log(`Precio original: ${precios[0]} || Número originado: ${firstPrice} || Precio final: ${firstDiscount}`);
+
+  const secondPrice = Math.floor(Math.random()*100)
+  const secondDiscount = secondPrice < precios[1] ? `${precios[1] - precios[1]*0.1} (10% de descuento)` : `${precios[1] - precios[1]*0.2} (20% de descuento)`
+
+  console.log(`Precio original: ${precios[0]} || Número originado: ${secondPrice} || Precio final: ${secondDiscount}`);
+}
+discountPerPrice([120, 75])
 
 //Sabrina está en un restaurante con dos amigos. Recibe un array con tres cuentas, por ejemplo: [120, 75, 93]. Cada cuenta debe dividirse entre 3 para pagar de manera justa. Si el resultado de la división es impar, debe redondearse al número par más cercano. Sabrina debe imprimir el precio original, el precio dividido y el precio final (redondeado si es necesario) para cada cuenta.
 
@@ -91,9 +147,66 @@ discountPerPrice([99])
 //Cuenta original: 75 | Dividido: 25 | Precio final: 26 (Redondeado al número par más cercano)
 //Cuenta original: 93 | Dividido: 31 | Precio final: 32 (Redondeado al número par más cercano)
 
+//CAMINO CORTO
+
+const calculatePriceAccount = (price) => {
+  const dividedPrice = price/3
+  const dividedPriceResult = dividedPrice % 2 === 0 ? dividedPrice : Math.round(dividedPrice)
+  return dividedPriceResult
+}
+
+const calculateListPrices = (listCount) => {
+
+  console.log(`Cuenta original: ${listCount[0]} | Dividido: ${listCount[0]/3} | Precio final: ${calculatePriceAccount(listCount[0])}`)
+
+  console.log(`Cuenta original: ${listCount[1]} | Dividido: ${listCount[1]/3} | Precio final: ${calculatePriceAccount(listCount[1])}`)
+  
+}
+
+calculateListPrices([120, 40])
+
+
+//CAMINO LARGO (se repetirían 3 veces las constantes firstDividedCount...con el segundo y el tercero)
+
+const priceAccount = (price) => {
+  const firstDividedCount = price[0]/3
+  const firstDividedCountResult = firstDividedCount % 2 === 0 ? firstDividedCount : Math.round(firstDividedCount)
+  //console.log(`Cuenta original: ${price[0]} | Dividido: ${firstDividedCount} | Precio final: ${firstDividedCountResult}`)
+
+  const secondDividedCount = price[1]/3
+  const secondDividedCountResult = secondDividedCount % 2 === 0 ? secondDividedCount : Math.round(secondDividedCount)
+  //console.log(`Cuenta original: ${price[1]} | Dividido: ${secondDividedCount} | Precio final: ${secondDividedCountResult}`)
+}
+
+priceAccount([50,120,40])
+
+
+
+
 //Macarena quiere calcular la edad de tres clientes. Recibe un array con tres años de nacimiento entre 1950 y 2010. Sabiendo que estamos en el año 2025, debe calcular la edad de cada uno y determinar si al menos uno es mayor de 18. Si hay al menos un cliente mayor de edad, imprimirá "Hay un cliente mayor de edad", si no, "Todos son menores de edad".
 
+const calculateClientsAges = (bornYear) => {
+  const firstClientsAge = 2025 - bornYear[0]
+  const secondClientsAge = 2025 - bornYear[1]
+  const thirdClientsAge = 2025 - bornYear[2]
+
+  if (firstClientsAge > 18 || secondClientsAge > 18 || thirdClientsAge > 18) {
+    console.log('Hay un cliente mayor de edad');
+  } else {console.log('Todos son menores de edad *procede a venderles alchohol')}
+}
+calculateClientsAges([2008, 2010, 2009])
+
+
 //Abby encontró un código de seguridad con tres números entre 100 y 999. Si el primer número es mayor que el segundo pero menor que el tercero, imprimirá "Código válido", si no, "Código incorrecto".
+
+const segurityCode = (code) => {
+
+  if (code[2] > code[0] > code[1]) {
+    console.log('Código válido');
+  } else {console.log('Código inválido')
+  }
+}
+segurityCode([15, 13, 100])
 
 //Camila está organizando la lista de clientes de su tienda. Un cliente nuevo, "Lucía", llega y debe agregarse al final de la lista de clientes: ["Carlos", "María", "Sofía"]. Luego, debe mostrar cuántos clientes hay en la lista.
 
