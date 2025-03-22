@@ -119,7 +119,7 @@ const applyDiscount = (price) => {
 }
 
 const discountsPerPrices = (pricesList) => {
-  firstPrice = applyDiscount(pricesList[0])
+  const firstPrice = applyDiscount(pricesList[0])
   console.log((`Precio original: ${pricesList[0]} || Número originado: ${applyDiscount()} || Precio final: ${firstPrice}`));
    
 }
@@ -181,8 +181,6 @@ const priceAccount = (price) => {
 priceAccount([50,120,40])
 
 
-
-
 //Macarena quiere calcular la edad de tres clientes. Recibe un array con tres años de nacimiento entre 1950 y 2010. Sabiendo que estamos en el año 2025, debe calcular la edad de cada uno y determinar si al menos uno es mayor de 18. Si hay al menos un cliente mayor de edad, imprimirá "Hay un cliente mayor de edad", si no, "Todos son menores de edad".
 
 const calculateClientsAges = (bornYear) => {
@@ -201,29 +199,112 @@ calculateClientsAges([2008, 2010, 2009])
 
 const segurityCode = (code) => {
 
-  if (code[2] > code[0] > code[1]) {
+  if (code[0] > code[1] && code[0] < code[2] ) {
     console.log('Código válido');
   } else {console.log('Código inválido')
   }
 }
-segurityCode([15, 13, 100])
+segurityCode([15, 13, 11])
+
 
 //Camila está organizando la lista de clientes de su tienda. Un cliente nuevo, "Lucía", llega y debe agregarse al final de la lista de clientes: ["Carlos", "María", "Sofía"]. Luego, debe mostrar cuántos clientes hay en la lista.
 
+//no sé si names.push necesita ser una constante.
+
+const clientList = (names) => {
+  console.log(`Hay ${names.length} personas en la lista`);
+  names.push('Lucía')
+  console.log(`${names[names.length - 1]} se añadió a la lista, ahora hay ${names.length} personas.`)
+}
+clientList(["Carlos", "María", "Sofía"])
+
+
 //Bego está revisando el stock de su tienda. Un producto aleatorio ya no está disponible y debe ser eliminado de la lista: ["Pan", "Leche", "Huevos"]. Después, debe mostrar cuántos productos quedan.
+
+//Me hubiera gustado que se plasmara la lista pero sin el aleatoryItem, pero no he sabido hacerlo.
+
+const stockAvailable = (products) => {
+  console.log(`Tienes ${products.length} productos en stock: ${products}`);
+  const aleatoryItem = Math.floor(Math.random()*3)
+
+  console.log(`El producto ${products[aleatoryItem]} se ha eliminado de la lista. Tienes ${products.length-1} productos en stock.`);
+  
+}
+stockAvailable(["Pan", "Leche", "Huevos"])
+
 
 //Sabrina está registrando pedidos en un restaurante. Un nuevo pedido, "Pizza", ha sido añadido en primer lugar a la lista de pedidos: ["Hamburguesa", "Ensalada"]. Luego, debe imprimir el primer pedido en la lista.
 
+//¿hay que poner una constante en order.unshift? aunque luego no se use?
+
+const restaurantOrders = (orders) => {
+  orders.unshift('Pizza')
+  console.log(`${orders}`);
+}
+restaurantOrders(["Hamburguesa", "Ensalada"])
+
 //Macarena está revisando las reservas de su hotel. Un cliente canceló su reserva en la lista: ["Habitación 101", "Habitación 203", "Habitación 305"]. Luego, debe mostrar cuántas reservas quedan.
+
+//¿Se supone que solo hay que mostrar esto?
+
+const reservedRooms = (rooms) => {
+  const roomsLeft = rooms.length - 1
+  console.log(`Hay ${roomsLeft} reservas`);
+}
+reservedRooms(["Habitación 101", "Habitación 203", "Habitación 305"])
 
 //Abby encontró una lista de suministros en un refugio, por ejemplo: ["Botiquín", "Munición", "Agua", "Comida"]. Necesita asegurarse de que hay "Munición" y "Comida" disponibles. Si ambos están en la lista, debe mostrar "Suministros completos". Si falta alguno, debe mostrar "Suministros incompletos".
 
+const shelterSupplies = (supplies) => {
+  if (supplies.includes('Munición') && supplies.includes('Comida')) {
+    console.log('Suministros completos');
+  } else {console.log('Suministros incompletos');
+  }
+}
+shelterSupplies(["Munición", "Botiquín", "Agua", "Comida"])
+
 //Camila está organizando una lista de espera. Un cliente importante, "Fernando", debe ser colocado en la primera posición de la lista: ["Ana", "Luis", "Elena"]. Luego, debe mostrar quién es el último en la lista.
+
+const waitingList = (clients) => {
+  const vipClient = clients.unshift('Fernando')
+  console.log(`La lista de espera es: ${clients}. Al último, ${clients[clients.length-1]}, le tocará esperar 30 minutos`);
+}
+waitingList(["Ana", "Luis", "Elena"])
 
 //Bego tiene una caja registradora con pagos pendientes. Ha procesado el primer pago en la lista de pagos y debe eliminarlo: [15.50, 32.75, 8.99]. Luego, debe mostrar cuántos pagos quedan por procesar.
 
-//Sabrina está actualizando el menú de su restaurante. Un nuevo plato, "Pasta", ha sido agregado a la lista de platos: ["Sopa", "Carne asada"], y el último ha sido eliminado. Luego, debe mostrar la lista de platos.Sabrina está actualizando el menú de su restaurante. Un nuevo plato, "Pasta", ha sido agregado a la lista de platos: ["Sopa", "Carne asada"], y el último ha sido eliminado. Luego, debe mostrar la lista de platos.
+const cashRegister = (payments) => {
+  const paymentsDone = payments.shift()
+  console.log(`Quedan ${payments.length} pagos pendientes`);
+}
+cashRegister([15.50, 32.75, 8.99])
+
+//Sabrina está actualizando el menú de su restaurante. Un nuevo plato, "Pasta", ha sido agregado a la lista de platos: ["Sopa", "Carne asada"], y el último ha sido eliminado. Luego, debe mostrar la lista de platos.
+
+const menuActualiced = (plates) => {
+  const newPlates = plates.unshift('Pasta')
+  const eliminatedPlates = plates.pop()
+  console.log(`${plates}`);
+}
+menuActualiced(["Sopa", "Carne asada"])
 
 //Macarena está organizando un torneo. Un nuevo jugador, "Diego", se ha inscrito y reemplazará al último de la lista de jugadores: ["Hugo", "Mateo", "Álvaro"]. Luego, debe mostrar la cantidad total de jugadores inscritos.
 
+const tennisTournamentAttendees = (atendees) => {
+  const atendeesReplacement = atendees.pop() + atendees.push('Diego')
+  console.log(`Habrá ${atendees.length} asistentes`);
+}
+tennisTournamentAttendees(["Hugo", "Mateo", "Álvaro"])
+
 //Abby está recibiendo señales de radio con mensajes en espera. Ha procesado el mensaje más antiguo de la lista: ["Atención, infectados cerca", "Necesitamos refuerzos", "Zona despejada"] y ha recibido uno nuevo: "Solicitamos medicinas". Luego, debe mostrar los mensajes uno por uno en console.log independientes.
+
+const radioSignals = (messages) => {
+  const processedMessages = messages.pop()
+  const newSignal = messages.unshift('Solicitamos medicinas');
+  console.log(messages[0]);
+  console.log(messages[1]);
+  console.log(messages[2]);
+}
+radioSignals(["Atención, infectados cerca", "Necesitamos refuerzos", "Zona despejada"])
+
+
